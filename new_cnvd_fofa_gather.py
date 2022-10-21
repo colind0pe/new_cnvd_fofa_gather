@@ -27,13 +27,23 @@ def fofa_search(kjgs):
     time.sleep(5)   # fofa限制请求速率，设置请求间隔为5秒
     json_result = json.loads(result.content)
     ip_count = json_result['distinct']['ip']
-    if ip_count == 0:
-        print(kjgs + "--->独立IP总数：" + "0")
+    if ip_count < 20:
+        print(kjgs + " ---> 独立IP总数：" + str(ip_count))
+        with open(r'result.txt', 'a+') as f:
+                f.write(kjgs + " ---> 独立IP总数：" + str(ip_count))
+                f.write('\n')
+                f.write('\n')
+                f.close()
     else:
         # 独立IP总数不为0时获取对应的标题榜首和标题对应数量
         title = json_result['aggs']['title'][0]['name']
         title_count = json_result['aggs']['title'][0]['count']
-        print(kjgs + "--->独立IP总数：" + str(ip_count) + "--->标题榜首：" + title + "--->标题对应数：" + str(title_count))
+        print(kjgs + " ---> 独立IP总数：" + str(ip_count) + " ---> 标题榜首：" + title + " ---> 标题对应数：" + str(title_count))
+        with open(r'result.txt', 'a+') as f:
+                f.write(kjgs + " ---> 独立IP总数：" + str(ip_count) + " ---> 标题榜首：" + title + " ---> 标题对应数：" + str(title_count))
+                f.write('\n')
+                f.write('\n')
+                f.close()
         
 
 
